@@ -1,0 +1,22 @@
+{
+  "placeholderImages": [
+    {
+      "id": "user-avatar-1",
+      "description": "Default user avatar for Jane Doe",
+      "imageUrl": "https://images.unsplash.com/photo-1678169810343-b1b73259743b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHx3b21hbiUyMHBlcnNvbnxlbnwwfHx8fDE3NzE3NTUyNzJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "woman person"
+    },
+    {
+      "id": "user-avatar-2",
+      "description": "Default user avatar for John Smith",
+      "imageUrl": "https://images.unsplash.com/photo-1554935208-2bc12b516985?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxtYW4lMjBwZXJzb258ZW58MHx8fHwxNzcxODU2MDEwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "man person"
+    },
+    {
+      "id": "user-avatar-3",
+      "description": "Default user avatar for Alex Johnson",
+      "imageUrl": "https://images.unsplash.com/photo-1770992994662-f4bc077de968?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8cGVyc29uJTIwdXNlcnxlbnwwfHx8fDE3NzE4NTYwMTJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "person user"
+    }
+  ]
+}
