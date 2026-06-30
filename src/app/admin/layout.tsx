@@ -4,7 +4,7 @@ import { DashboardLayout } from '@/components/dashboard/dashboard-layout';
 import { useAuth } from '@/hooks/use-auth';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { LayoutDashboard, Users, ListChecks, CalendarClock, FileSpreadsheet, BookOpen, CalendarRange, Settings } from 'lucide-react';
+import { LayoutDashboard, Users, ListChecks, CalendarClock, FileSpreadsheet, BookOpen, CalendarRange, Settings, CalendarOff } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const adminNavItems = [
@@ -13,6 +13,7 @@ const adminNavItems = [
   { href: '/admin/tasks', label: 'Tasks', icon: <ListChecks /> },
   { href: '/admin/weekly-tasks', label: 'Weekly View', icon: <CalendarRange /> },
   { href: '/admin/attendance', label: 'Attendance', icon: <CalendarClock /> },
+  { href: '/admin/leaves', label: 'Leaves', icon: <CalendarOff /> },
   { href: '/admin/daily-logs', label: 'Work Logs', icon: <BookOpen /> },
   { href: '/admin/sheets', label: 'Sheets', icon: <FileSpreadsheet /> },
   { href: '/admin/settings', label: 'Settings', icon: <Settings /> },

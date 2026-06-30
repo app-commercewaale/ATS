@@ -246,6 +246,19 @@ export const getLeavesForEmployee = async (employeeId: string) => {
   }, 60_000);
 };
 
+export const getAllLeaves = async () => {
+  return cache.getOrFetch("leaves:all", async () => {
+    const res = await apiCall("GET_LEAVES");
+    return res.leaves || [];
+  }, 30_000);
+};
+
+export const updateLeave = async (leaveId: string, status: "Approved" | "Rejected") => {
+  const res = await apiCall("UPDATE_LEAVE", { leaveId, status });
+  cache.delPrefix("leaves:");
+  return res;
+};
+
 /* ================= ATTENDANCE SUMMARY / AUTOMATION ================= */
 
 export type AttendanceMark = "P" | "Ab" | "Ac" | "L" | "H" | "Wo" | "" | string;
