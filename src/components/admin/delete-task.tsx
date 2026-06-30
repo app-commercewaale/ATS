@@ -52,9 +52,11 @@ description: error.message,
 variant: "destructive"
 })
 
-}
+} finally {
 
 setLoading(false)
+
+}
 
 }
 

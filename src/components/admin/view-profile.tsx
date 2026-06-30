@@ -57,7 +57,7 @@ function ProfileContent({ employee }: { employee: User }) {
                     api.getAttendanceForEmployee(employee.id)
                 ]);
                 setTasks(taskData);
-                const sortedAttendance = attendanceData.sort((a,b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+                const sortedAttendance = [...attendanceData].sort((a,b) => new Date(b.date).getTime() - new Date(a.date).getTime());
                 setAttendance(sortedAttendance.slice(0, 7));
             } catch (error) {
                 console.error("Failed to fetch profile data", error);

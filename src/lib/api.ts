@@ -5,7 +5,7 @@ import { User, Task, Attendance, WorkMode } from "./types";
  * GOOGLE APPS SCRIPT WEB APP URL
  */
 const API_URL =
-  "https://script.google.com/macros/s/AKfycbzhx-yQtqfCJwUrWCGi-P4dAMAd4rUoke6dBse_JJwFMV7xfGM-KrpWr-o-Zt2OlfJZ9A/exec";
+  "https://script.google.com/macros/s/AKfycbzG9MRSpnYsYn4G4GuFxa9w008HTGypAdyQSOhlZh1oFKJPUtwOSWrABjZ4A_zqF8ft/exec";
 
 /**
  * Generic API caller
@@ -15,12 +15,6 @@ const API_URL =
 export async function apiCall(action: string, data: any = {}) {
   try {
     const url = `${API_URL}?action=${action}`;
-
-    // ✅ ADD THIS LINE
-    console.log("API Request →", {
-      action,
-      data
-    });
 
     const response = await fetch(url, {
       method: "POST",
@@ -35,17 +29,11 @@ export async function apiCall(action: string, data: any = {}) {
       }),
     });
 
-    // ✅ ALSO ADD THIS (VERY USEFUL)
-    console.log("API Raw Response →", response);
-
     if (!response.ok) {
       throw new Error(`HTTP error ${response.status}`);
     }
 
     const result = await response.json();
-
-    // ✅ ADD THIS TOO
-    console.log("API Parsed Response →", result);
 
     if (result.status === "error") {
       throw new Error(result.message || "Unknown API error");
@@ -103,7 +91,7 @@ function normalizeTask(t: any): Task {
   const assignedBy = t.assignedBy ?? t.created_by ?? t.createdBy ?? t.assigned_by ?? "";
   const dueDate = t.dueDate ?? t.due_date ?? "";
   const dueTime = t.dueTime ?? t.due_time ?? "";
-  const submissionNote = t.submissionNote ?? t.submission_note ?? "";
+  const submissionNote = t.submissionNote ?? t.submission_note ?? t.report ?? "";
 
   return {
     ...t,
@@ -206,21 +194,23 @@ export const getTodaysAttendanceForEmployee = async (
   const attendance = res.attendance || [];
   if (!attendance.length) return null;
 
-  const sorted = attendance.sort(
-    (a: any, b: any) =>
-      new Date(b.clockInTime || b.clock_in).getTime() -
-      new Date(a.clockInTime || a.clock_in).getTime()
-  );
+  const sorted = [...attendance].sort((a: any, b: any) => {
+    const tA = new Date(a.clockInTime || a.clock_in || 0).getTime();
+    const tB = new Date(b.clockInTime || b.clock_in || 0).getTime();
+    return tB - tA;
+  });
 
   return sorted[0];
 };
+
+const GEO_OPTIONS: PositionOptions = { timeout: 10000, maximumAge: 60000 };
 
 export const clockIn = async (
   employeeId: string,
   workMode: WorkMode
 ) => {
   const position = await new Promise<GeolocationPosition>((resolve, reject) =>
-    navigator.geolocation.getCurrentPosition(resolve, reject)
+    navigator.geolocation.getCurrentPosition(resolve, reject, GEO_OPTIONS)
   );
 
   return await apiCall("CLOCK_IN", {
@@ -233,7 +223,7 @@ export const clockIn = async (
 
 export const clockOut = async (employeeId: string) => {
   const position = await new Promise<GeolocationPosition>((resolve, reject) =>
-    navigator.geolocation.getCurrentPosition(resolve, reject)
+    navigator.geolocation.getCurrentPosition(resolve, reject, GEO_OPTIONS)
   );
 
   return await apiCall("CLOCK_OUT", {
@@ -253,6 +243,15 @@ export const submitLeaveRequest = async (leaveData: any) => {
 export const getLeavesForEmployee = async (employeeId: string) => {
   const res = await apiCall("GET_LEAVES", { employeeId });
   return res.leaves || [];
+};
+
+export const getAllLeaves = async () => {
+  const res = await apiCall("GET_LEAVES");
+  return res.leaves || [];
+};
+
+export const updateLeave = async (leaveId: string, status: 'Approved' | 'Rejected') => {
+  return await apiCall("UPDATE_LEAVE", { leaveId, status });
 };
 
 /* ================= ATTENDANCE SUMMARY / AUTOMATION ================= */
@@ -360,6 +359,7 @@ export const getMonthlyStats = async (
   month?: string
 ): Promise<MonthlyStats> => {
   const res = await apiCall("GET_MONTHLY_STATS", { employeeId, month });
+  if (!res.stats) throw new Error("No stats returned for employee");
   return res.stats;
 };
 

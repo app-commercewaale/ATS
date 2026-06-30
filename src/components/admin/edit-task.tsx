@@ -43,6 +43,7 @@ import {
 import { Calendar } from "@/components/ui/calendar";
 
 import { CalendarIcon, Pencil } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 import * as api from "@/lib/api";
 import { User } from "@/lib/types";
@@ -52,6 +53,7 @@ import { useRouter } from "next/navigation";
 
 export function EditTask({ task }: any) {
   const router = useRouter();
+  const { toast } = useToast();
   const [open, setOpen] = useState(false);
   const [employees, setEmployees] = useState<User[]>([]);
 
@@ -99,23 +101,28 @@ export function EditTask({ task }: any) {
 
     if (values.dueDate) {
       const [hours, minutes] = values.dueTime.split(":").map(Number);
-
       const d = new Date(values.dueDate);
       d.setHours(hours, minutes);
-
       dueDateISO = d.toISOString();
     }
 
-    await api.updateTask(task.id, {
-      title: values.title,
-      description: values.description,
-      assigned_to: values.assignedTo,
-      due_date: dueDateISO,
-      due_time: values.dueTime,
-    });
-
-    setOpen(false);
-    router.refresh();
+    try {
+      await api.updateTask(task.id, {
+        title: values.title,
+        description: values.description,
+        assigned_to: values.assignedTo,
+        due_date: dueDateISO,
+        due_time: values.dueTime,
+      });
+      setOpen(false);
+      router.refresh();
+    } catch (error) {
+      toast({
+        title: "Update Failed",
+        description: error instanceof Error ? error.message : "Could not update task.",
+        variant: "destructive",
+      });
+    }
   }
 
   return (

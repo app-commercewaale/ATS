@@ -4,7 +4,7 @@ import { DashboardLayout } from '@/components/dashboard/dashboard-layout';
 import { useAuth } from '@/hooks/use-auth';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { LayoutDashboard, Users, ListChecks, CalendarClock, FileSpreadsheet } from 'lucide-react';
+import { LayoutDashboard, Users, ListChecks, CalendarClock, FileSpreadsheet, CalendarOff } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const adminNavItems = [
@@ -12,6 +12,7 @@ const adminNavItems = [
   { href: '/admin/employees', label: 'Employees', icon: <Users /> },
   { href: '/admin/tasks', label: 'Tasks', icon: <ListChecks /> },
   { href: '/admin/attendance', label: 'Attendance', icon: <CalendarClock /> },
+  { href: '/admin/leaves', label: 'Leaves', icon: <CalendarOff /> },
   { href: '/admin/sheets', label: 'Sheets', icon: <FileSpreadsheet /> },
 ];
 

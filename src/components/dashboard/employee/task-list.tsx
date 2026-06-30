@@ -82,9 +82,9 @@ function SubmitReportDialog({
     setIsSubmitting(true);
 
     try {
-      const updatedTask = await api.submitTaskReport(task.id, report);
+      await api.submitTaskReport(task.id, report);
 
-      onTaskUpdate(updatedTask);
+      onTaskUpdate({ ...task, status: "Under Review", submissionNote: report });
       router.refresh();
 
       toast({
