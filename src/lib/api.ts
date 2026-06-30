@@ -5,7 +5,7 @@ import { User, Task, Attendance, WorkMode } from "./types";
  * GOOGLE APPS SCRIPT WEB APP URL
  */
 const API_URL =
-  "https://script.google.com/macros/s/AKfycbzG9MRSpnYsYn4G4GuFxa9w008HTGypAdyQSOhlZh1oFKJPUtwOSWrABjZ4A_zqF8ft/exec";
+  "https://script.google.com/macros/s/AKfycbyhXkVboWjpe08SUkcoQP8vJl4BJTA4enCtKRDzVXzbkqHVGRuCL3mOOV24V93Odm1v/exec";
 
 /**
  * Generic API caller
