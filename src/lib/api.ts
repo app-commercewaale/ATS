@@ -2,7 +2,7 @@ import { User, Task, Attendance, WorkMode, DailyLog } from "./types";
 import { cache } from "./cache";
 
 const API_URL =
-  "https://script.google.com/macros/s/AKfycbzhx-yQtqfCJwUrWCGi-P4dAMAd4rUoke6dBse_JJwFMV7xfGM-KrpWr-o-Zt2OlfJZ9A/exec";
+  "https://script.google.com/macros/s/AKfycbyhXkVboWjpe08SUkcoQP8vJl4BJTA4enCtKRDzVXzbkqHVGRuCL3mOOV24V93Odm1v/exec";
 
 export async function apiCall(action: string, data: any = {}) {
   try {
